@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Exploring Open Data & Open Source with Open Food Facts</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    line-height:1.7;
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+}
+
+nav{
+    position:sticky;
+    top:0;
+    background:#fff;
+    padding:10px 0;
+    border-bottom:1px solid #ccc;
+}
+
+nav a{
+    margin-right:18px;
+    text-decoration:none;
+}
+
+section{
+    margin:60px 0;
+}
+
+h1{
+    font-size:2.4em;
+}
+
+h2{
+    border-bottom:2px solid #ddd;
+    padding-bottom:5px;
+}
+
+blockquote{
+    background:#f5f5f5;
+    padding:12px;
+    border-left:4px solid #999;
+}
+
+details{
+    margin-top:15px;
+    background:#fafafa;
+    padding:10px;
+}
+
+.time{
+    color:#666;
+    font-size:0.9em;
+}
+
+.question{
+    color:#c00;
+    font-weight:bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Exploring Open Data & Open Source with Open Food Facts</h1>
+
+<nav>
+<a href="#intro">Intro</a>
+<a href="#open">Open Data & Open Source</a>
+<a href="#tools">Free Tools & Services</a>
+<a href="#off">Open Food Facts - Tour</a>
+<a href="#data">Open Food Facts - Data</a>
+<a href="#contribute">Contribute</a>
+<a href="#india">India Food Stats</a>
+<a href="#qa">Q&A</a>
+</nav>
+
+<section id="intro">
+
+<h2>1. Intro</h2>
+
+<ul>
+
+<li>Nutrition 101</li>
+<li>Unprocessed vs Ultra Processed Food</li>
+<li>Nutrition labels on Packaged foods - <a href="https://in.openfoodfacts.org/product/8901058005905/kitkat-dark-chocolate-coated-wafer-nestle"  target="_blank">India</a> vs <a href="https://cl-en.openfoodfacts.org/product/8445290510815"  target="_blank">Chile</a></li>
+
+</section>
+
+<section id="open">
+
+<h2>2. What does "Open" in Open Data & Open Source mean?</h2>
+
+<ul>
+
+<li>Anyone can use, modify and share</li>
+<li>Open Data examples - <a href="https://world.openfoodfacts.org/" target="_blank">Open Food Facts</a>, data.gov.in, weather observations, Wikipedia etc</li>
+<li>Open Source examples - Linux; hosted on platforms like GitHub, GitLab</li>
+
+<blockquote>
+Today, contributing to Open Source is one of the strongest signals of practical software engineering skills.
+</blockquote>
+</section>
+
+<section id="tools">
+
+<h2>3. Amazing Free Tools & Services</h2>
+
+<ul>
+<li><a href="https://datasette.io/"  target="_blank" rel="nofollow">Datasette</a> - open-source tool for exploring, analyzing, and publishing data.</li>
+<li><a href="https://flatgithub.com/mvark/indiafoodstats/blob/main/data/india_products_18613.csv?filename=1.%20Dairy%20products%20and%20analogues%2FPaneer.csv&sha=17c0d00f386d1cfb44e25ea2cd4a7977b3c63cc1" target="_blank">FlatGitHub</a> - makes it easy to work with data in git and GitHub</li>
+<li><a href="https://huggingface.co/datasets/openfoodfacts/product-database/blob/main/food.parquet" rel="nofollow"  target="_blank">Hugging Face</a>🤗 - for pretrained models, datasets and inference APIs</li>
+<li><a href="https://colab.research.google.com/" target="_blank">Google Colab</a> - for cloud-hosted Python notebooks</li>
+</ul>
+
+<div class="question">
+
+What could you build using only free tools?
+
+</div>
+
+</section>
+
+<section id="off">
+
+<h2>4. Open Food Facts - A Tour</h2>
+<ul>
+<li>Nutrition Labels - Ingredients, Nutrients, Allergens</li>
+<li>NOVA - Food processing classification.</li>
+<li>Nutri-Score - Quick nutrition comparison.</li>
+<li><a href="https://in.openfoodfacts.org/facets/ingredients" target="_blank">Facets</a> - Find foods by ingredients and nutrition.
+<li><a href="https://github.com/openfoodfacts/" target="_blank">Code Components</a>
+<li><a href="https://summerofcode.withgoogle.com/programs/2026/projects" target="_blank">OFF has a Google Summer of Code (GSoC) mentoring organization in 2018, 2022, 2025 & 2026</a>
+</ul>
+</section>
+
+<section id="data">
+
+<h2>5. Open Food Facts - Data</h2>
+Open Food Facts doesn't lock you into one technology.
+
+The same data is available as:
+<ul>
+<li><a target="_blank" href="https://in.openfoodfacts.org/cgi/search.pl?search_terms=milk&search_simple=1&action=process">CSV</a></li>
+<li><a href="https://flatgithub.com/mvark/indiafoodstats/blob/main/data/india_products_18613.csv?filename=1.%20Dairy%20products%20and%20analogues%2FPaneer.csv&sha=17c0d00f386d1cfb44e25ea2cd4a7977b3c63cc1" target="_blank">Parquet</a></li>
+<li><a href="https://in.openfoodfacts.org/data" target="_blank"> JSONL</a></li>
+<li><a href="https://in.openfoodfacts.org/data" target="_blank">MongoDB</a></li>
+<li><a target="_blank" href="https://mirabelle.openfoodfacts.org/products">SQL</a></li>
+<li><a target="_blank" href="https://world.openfoodfacts.net/api/v3/product/8900404114308?product_type=all&fields=categories_tags_en,brands_tags_en">APIs</a></li>
+</ul>
+</section>
+
+<section id="contribute">
+
+<h2>6. How You Can Contribute</h2>
+
+<ul>
+
+<li>Scan products using Open Food Facts & add missing data</li>
+
+<li>Improve data quality</li>
+
+<li>Write code for new features</li>
+
+<li>Create data visualisations to create nutritional awareness</li>
+
+<li>Build AI apps on top of open datasets</li>
+
+<li>Translate to regional languages</li>
+
+<li>Fix or report issues</li>
+
+</ul>
+
+</section>
+
+<section id="india">
+
+<h2>7. India Food Stats</h2>
+My experiments:
+<ul>
+<li><a target="_blank" href="https://github.com/mvark/indiafoodstats/tree/main/data">Packaged Food Products from India as CSV files</a></li>
+<li><a target="_blank" href="https://mvark.blogspot.com/2024/01/nutriscan-decode-food-with-your-mobile.html">NutriScan App - Decode Food with Your Mobile Browser</a></li>
+<li><a target="_blank" href="https://indiafoodstats.blogspot.com/search/label/Charts">Charts</a></li>
+</ul>
+
+</section>
+
+<section id="qa">
+<h2>Questions?</h2>
+</section>
+
+</body>
+</html>
