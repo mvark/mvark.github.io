@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hyderabad Micro Climate Dashboard</title>
+<style>
+  /* Dark background, light text - a simple dashboard look */
+  body { font-family: Arial, sans-serif; background:#111; color:#eee; margin:0; padding:16px; }
+  h2 { color:#f5a623; margin-bottom:4px; }
+  .sub { color:#888; margin-top:0; margin-bottom:16px; font-size:13px; }
+
+  /* Places the checkbox panel and the table side by side, wrapping on small screens */
+  .layout { display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap; }
+
+  /* The scrollable box that lists all localities as checkboxes */
+  .places-panel {
+    background:#1a1a1a; border:1px solid #333; padding:10px 14px; border-radius:6px;
+    max-height:480px; overflow-y:auto; min-width:220px;
+  }
+  .places-panel h3 { margin-top:0; font-size:14px; color:#ccc; }
+  .places-panel label { display:block; font-size:13px; padding:3px 0; cursor:pointer; }
+  .places-panel input { margin-right:6px; }
+
+  /* The API key input row above the table */
+  .apikey-row { margin-bottom:14px; }
+  .apikey-row input { width:340px; padding:5px; background:#1a1a1a; border:1px solid #444; color:#eee; }
+  .apikey-row label { font-size:13px; color:#ccc; margin-right:6px; }
+
+  /* Basic table styling */
+  table { border-collapse:collapse; background:#1a1a1a; min-width:300px; }
+  th, td { border:1px solid #333; padding:8px 14px; text-align:center; font-size:13px; white-space:nowrap; }
+  th.param-col, td.param-col { text-align:left; background:#222; color:#ccc; font-weight:bold; position:sticky; left:0; }
+  th { background:#222; color:#f5a623; }
+
+  /* Colour-coded status text so it's easy to scan for errors at a glance */
+  .status-ok { color:#4caf50; font-weight:bold; }
+  .status-err { color:#e05555; font-weight:bold; }
+  .status-loading { color:#888; }
+
+  .refresh-btn {
+    background:#f5a623; color:#111; border:none; padding:6px 14px; border-radius:4px;
+    cursor:pointer; font-size:13px; margin-bottom:14px;
+  }
+  .note { font-size:11px; color:#777; margin-top:16px; }
+</style>
+</head>
+<body>
+
+<h2>Hyderabad Micro Climate Dashboard</h2>
+<p class="sub">Data source: WeatherUnion API. Check a locality to add it as a column.</p>
+
+<!-- API key input. The value is read at fetch time, never stored anywhere. -->
+<div class="apikey-row">
+  <label for="apikey">X-Zomato-Api-Key:</label>
+  <input type="text" id="apikey" placeholder="paste your key here">
+  <button class="refresh-btn" onclick="refreshAll()">Refresh</button>
+</div>
+
+<div class="layout">
+  <!-- Checkbox list gets filled in by JavaScript on page load -->
+  <div class="places-panel">
+    <h3>Localities</h3>
+    <div id="placeList"></div>
+  </div>
+
+  <!-- The results table. headerRow and tableBody are rebuilt every time
+       the set of checked places changes. -->
+  <div style="overflow-x:auto;">
+    <table id="dataTable">
+      <thead><tr id="headerRow"><th class="param-col">Locality</th></tr></thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<p class="note">All content on this dashboard reflects live data pulled from the WeatherUnion API at request time.</p>
+
+<script>
+// ---------------------------------------------------------------------------
+// DATA: every locality we can show, with its latitude/longitude.
+// WeatherUnion's weather endpoint takes coordinates, not a place name, so
+// this lookup table is how we translate a friendly name into what the API
+// actually needs. 
+// List of all localities in cities across India covered by Weather Union:
+// https://b.zmtcdn.com/data/file_assets/65fa362da3aa560a92f0b8aeec0dfda31713163042.pdf
+// ---------------------------------------------------------------------------
+const LOCALITIES = {
+  "Manikonda": { lat: 17.40593, lon: 78.38838 },
+  "Shamshabad": { lat: 17.257432, lon: 78.38792 },
+  "Miyapur": { lat: 17.500034, lon: 78.34267 },
+  "Hayath Nagar": { lat: 17.32662, lon: 78.609288 },
+  "Sangareddy": { lat: 17.598038, lon: 78.091346 },
+  "JNTU": { lat: 17.485166, lon: 78.389775 },
+  "Serilingampally": { lat: 17.485245, lon: 78.313916 },
+  "Nizampet": { lat: 17.509398, lon: 78.390364 },
+  "Q City": { lat: 17.421788, lon: 78.318868 },
+  "Madhapur": { lat: 17.441185, lon: 78.398416 },
+  "Narayanguda": { lat: 17.39212, lon: 78.494443 },
+  "ECIL": { lat: 17.460327, lon: 78.567924 },
+  "Toli Chowki": { lat: 17.398121, lon: 78.421238 },
+  "Kondapur": { lat: 17.472485, lon: 78.367854 },
+  "Charminar": { lat: 17.375037, lon: 78.454499 },
+  "Sivarampalli": { lat: 17.345995, lon: 78.439283 },
+  "Tarnaka": { lat: 17.431829, lon: 78.55094 },
+  "Moosapet": { lat: 17.453292, lon: 78.421126 },
+  "Patancheru": { lat: 17.542613, lon: 78.276529 },
+  "Vanasthali Puram": { lat: 17.318241, lon: 78.544989 },
+  "Ameerpet": { lat: 17.434737, lon: 78.446618 },
+  "Uppal": { lat: 17.403149, lon: 78.554106 },
+  "Malakpet": { lat: 17.371621, lon: 78.502672 },
+  "Hafiz Baba Nagar": { lat: 17.338717, lon: 78.49759 },
+  "Mokila": { lat: 17.436228, lon: 78.190072 },
+  "Nagole": { lat: 17.359969, lon: 78.565724 },
+  "Attapur": { lat: 17.380875, lon: 78.415717 },
+  "Peerzadiguda": { lat: 17.411644, lon: 78.57822 },
+  "Begumpet": { lat: 17.442659, lon: 78.482009 },
+  "Surooram": { lat: 17.559752, lon: 78.437467 },
+  "Banjara Hills": { lat: 17.419238, lon: 78.438474 },
+  "Alwal": { lat: 17.508852, lon: 78.507402 },
+  "Sainikpuri": { lat: 17.489079, lon: 78.55891 },
+  "Saroor Nagar": { lat: 17.348264, lon: 78.530476 },
+  "Karkhana": { lat: 17.467142, lon: 78.496696 },
+  "Kompally": { lat: 17.533309, lon: 78.489965 },
+  "Himayatnagar": { lat: 17.402602, lon: 78.487229 },
+  "Medchal Road": { lat: 17.637191, lon: 78.480392 },
+  "Kukatpally": { lat: 17.495894, lon: 78.416259 },
+  "Amberpet": { lat: 17.407658, lon: 78.521703 },
+  "Jeedimetla": { lat: 17.495621, lon: 78.450281 },
+  "Gachibowli": { lat: 17.452114, lon: 78.351486 },
+  "LB Nagar": { lat: 17.345727, lon: 78.557062 },
+  "Dilsukhnagar": { lat: 17.370431, lon: 78.536184 },
+  "Masab Tank": { lat: 17.398217, lon: 78.462258 }
+};
+
+// Which localities are pre-checked when the page first loads.
+const DEFAULT_CHECKED = ["Miyapur", "Kondapur", "Serilingampally", "Gachibowli", "Madhapur"];
+
+// The rows of the table: each entry is one weather metric we display,
+// paired with the key it's stored under and the label shown in the UI.
+const PARAMS = [
+  { key: "temperature", label: "Temperature °C" },
+  { key: "humidity", label: "Humidity %H" },
+  { key: "wind_speed", label: "Wind Speed km/h" },
+  { key: "wind_direction", label: "Wind Direction °" },
+  { key: "rain_intensity", label: "Rain Intensity mm/hr" },
+  { key: "rain_accumulation", label: "Rain Accumulation mm" },
+  { key: "status", label: "Status" }
+];
+
+// Holds the last-fetched weather values per locality, keyed by name.
+// This is what lets us redraw the table instantly when a box is unchecked
+// (or re-checked) without calling the API again.
+const dataCache = {};
+
+// Grab the container div once so we don't re-query the DOM repeatedly.
+const placeListEl = document.getElementById("placeList");
+
+// Build the checkbox list from LOCALITIES, one <label><input> pair per
+// place, sorted alphabetically. Object.keys(...).sort() gives us the names
+// in order; forEach runs once per name.
+Object.keys(LOCALITIES).sort().forEach(name => {
+  const label = document.createElement("label");          // <label> wraps the checkbox + text
+  const checked = DEFAULT_CHECKED.includes(name);          // true if this place should start checked
+  // innerHTML sets the checkbox's value to the place name, pre-checks it if
+  // needed, and wires onchange to call onToggle whenever the user clicks it.
+  label.innerHTML = `<input type="checkbox" value="${name}" ${checked ? "checked" : ""} onchange="onToggle(this)"> ${name}`;
+  placeListEl.appendChild(label);                          // add this row to the panel
+});
+
+// Returns an array of place names for every checkbox that is currently ticked.
+function getCheckedPlaces() {
+  // querySelectorAll finds every checked checkbox inside the panel;
+  // Array.from turns that NodeList into a real array so we can .map() it;
+  // .map(cb => cb.value) pulls out just the place name from each checkbox.
+  return Array.from(placeListEl.querySelectorAll("input[type=checkbox]:checked")).map(cb => cb.value);
+}
+
+// Table cell ids can't contain spaces, so this turns a place name like
+// "Q City" into a safe id fragment like "Q_City".
+function cssId(name) {
+  return name.replace(/[^a-zA-Z0-9]/g, "_");
+}
+
+// Rebuilds the entire table (header + body) for the given list of places.
+// Called every time the checked places change.
+function renderTable(places) {
+  const headerRow = document.getElementById("headerRow");
+  const tbody = document.getElementById("tableBody");
+
+  // Header row: one fixed "Locality" label column, then one <th> per place.
+  headerRow.innerHTML = `<th class="param-col">Locality</th>` +
+    places.map(p => `<th>${p}</th>`).join("");
+
+  // Body: one <tr> per parameter (temperature, humidity, etc.), with one
+  // <td> per place in that row.
+  tbody.innerHTML = PARAMS.map(param => {
+    return `<tr id="row-${param.key}">
+      <td class="param-col">${param.label}</td>
+      ${places.map(p => {
+        const cached = dataCache[p];                                    // do we already have data for this place?
+        const val = cached && cached[param.key] != null ? cached[param.key] : "…"; // show the value, or a loading dot
+        // colour the cell green/red for the Status row, otherwise leave it
+        // plain; "…" cells get a muted "loading" style.
+        const cls = cached ? (param.key === "status" ? (cached.status === "OK" ? "status-ok" : "status-err") : "") : "status-loading";
+        // Each cell gets a unique id (cell-<param>-<place>) so we can find
+        // and update it directly later without re-rendering the whole table.
+        return `<td id="cell-${param.key}-${cssId(p)}" class="${cls}">${val}</td>`;
+      }).join("")}
+    </tr>`;
+  }).join("");
+}
+
+// Fetches live weather data for one locality and updates its column.
+// "async" lets us use "await" below instead of chaining .then() calls.
+async function fetchLocality(name) {
+  const apiKey = document.getElementById("apikey").value.trim(); // read the key fresh each call
+  const coords = LOCALITIES[name];                                // look up lat/lon for this place
+
+  // No key entered yet - show an error in the Status cell and stop here.
+  if (!apiKey) {
+    dataCache[name] = { status: "No API key" };
+    setCell(name, "status", "No API key", "status-err");
+    return;
+  }
+
+  try {
+    // Build the request URL with this place's coordinates.
+    const url = `https://www.weatherunion.com/gw/weather/external/v0/get_weather_data?latitude=${coords.lat}&longitude=${coords.lon}`;
+
+    // fetch() sends the request; the API key goes in a custom header,
+    // exactly as WeatherUnion's docs require.
+    const resp = await fetch(url, {
+      headers: { "X-Zomato-Api-Key": apiKey }
+    });
+
+    // A non-2xx response (e.g. 401, 404) doesn't throw on its own -
+    // we have to check resp.ok and throw manually if it failed.
+    if (!resp.ok) {
+      throw new Error("HTTP " + resp.status);
+    }
+
+    const data = await resp.json();                 // parse the JSON body
+    const w = data.locality_weather_data || {};      // the actual weather fields live here
+
+    // Build one tidy object with every value we want to display, falling
+    // back to "-" for anything missing.
+    const record = {
+      temperature: w.temperature != null ? w.temperature : "-",
+      humidity: w.humidity != null ? w.humidity : "-",
+      wind_speed: w.wind_speed != null ? w.wind_speed : "-",
+      wind_direction: w.wind_direction != null ? w.wind_direction : "-",
+      rain_intensity: w.rain_intensity != null ? w.rain_intensity : "-",
+      rain_accumulation: w.rain_accumulation != null ? w.rain_accumulation : "-",
+      status: "OK"
+    };
+
+    dataCache[name] = record; // remember this result for future re-renders
+
+    // Push each value into its matching table cell. Object.keys(record)
+    // gives us ["temperature", "humidity", ...]; forEach updates one cell
+    // per key, colouring only the "status" cell green.
+    Object.keys(record).forEach(key => setCell(name, key, record[key], key === "status" ? "status-ok" : ""));
+
+  } catch (err) {
+    // Something went wrong (network error, bad response, etc.) - show a
+    // dash in every data cell and the error message in Status, coloured red.
+    const record = {
+      temperature: "-", humidity: "-", wind_speed: "-", wind_direction: "-",
+      rain_intensity: "-", rain_accumulation: "-", status: "Error: " + err.message
+    };
+    dataCache[name] = record;
+    PARAMS.forEach(p => setCell(name, p.key, record[p.key], p.key === "status" ? "status-err" : ""));
+  }
+}
+
+// Updates a single table cell by id, if it still exists.
+function setCell(name, key, value, cls) {
+  const cell = document.getElementById(`cell-${key}-${cssId(name)}`);
+  if (!cell) return; // the column may have been removed (box unchecked) since the fetch started
+  cell.textContent = value;
+  cell.className = ""; // clear any previous status colour
+  if (cls) cell.classList.add(cls);
+}
+
+// Runs whenever a checkbox is ticked or unticked.
+// "checkbox" is the specific <input> element that changed (passed in via
+// the onchange="onToggle(this)" attribute above).
+function onToggle(checkbox) {
+  const places = getCheckedPlaces();   // recompute the full list of checked places
+  renderTable(places);                 // redraw the table to match (adds/removes columns)
+
+  // Only fetch new data if a box was just checked AND we don't already
+  // have cached data for it - this is what stops unchecking a box from
+  // triggering an unwanted network call.
+  if (checkbox && checkbox.checked && !dataCache[checkbox.value]) {
+    fetchLocality(checkbox.value);
+  }
+}
+
+// Runs when the "Refresh" button is clicked: clears the cache for every
+// checked place and fetches all of them again from scratch.
+function refreshAll() {
+  const places = getCheckedPlaces();
+  places.forEach(p => delete dataCache[p]); // drop old cached values so cells show "loading" again
+  renderTable(places);                      // redraw with the now-empty cache
+  places.forEach(p => fetchLocality(p));    // re-fetch every checked place
+}
+
+// --- Page startup ---
+// Draw the table once for whatever is checked by default (no fetch here -
+// onToggle(null) just renders; it doesn't have a specific checkbox to act on).
+onToggle(null);
+// Then kick off a real fetch for each of the pre-checked default places.
+DEFAULT_CHECKED.forEach(p => fetchLocality(p));
+</script>
+
+</body>
+</html>
