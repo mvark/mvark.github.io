@@ -6,6 +6,9 @@
 
 <title>Hyderabad School Explorer</title>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -40,22 +43,53 @@
         margin: 10px 0 20px;
     }
 
+    /* Map showing the currently visible (filtered) schools as dots */
+    #map {
+        width: 100%;
+        height: 320px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        margin-bottom: 20px;
+    }
+
+    .leaflet-popup-content {
+        font-size: 13px;
+    }
+
+    /* Responsive card grid: as many columns as fit at >=240px each,
+       collapsing to a single column on narrow screens automatically. */
+    #schools {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 14px;
+    }
+
     .school {
         background: white;
         border: 1px solid #ddd;
         border-radius: 6px;
         padding: 15px;
-        margin-bottom: 12px;
+        display: flex;
+        flex-direction: column;
     }
 
     .school h2 {
-        font-size: 18px;
-        margin: 0 0 5px;
+        font-size: 17px;
+        margin: 0 0 8px;
     }
 
-    .campus {
-        color: #555;
-        margin-bottom: 10px;
+    .field {
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+
+    .field .label {
+        color: #888;
+        margin-right: 4px;
+    }
+
+    .curriculum-row {
+        margin-bottom: 8px;
     }
 
     .curriculum {
@@ -63,18 +97,20 @@
         background: #eee;
         padding: 4px 8px;
         margin-right: 5px;
-        margin-bottom: 8px;
+        margin-bottom: 5px;
         border-radius: 3px;
-        font-size: 13px;
+        font-size: 12px;
     }
 
-    .links a {
-        margin-right: 15px;
+    .field a {
         text-decoration: none;
     }
 
-    .links {
-        margin-top: 8px;
+    .last-verified {
+        margin-top: auto;
+        padding-top: 8px;
+        font-size: 12px;
+        color: #888;
     }
 
     .footer {
@@ -93,6 +129,10 @@
     @media (max-width: 600px) {
         body {
             padding: 12px;
+        }
+
+        #map {
+            height: 240px;
         }
     }
 </style>
@@ -114,6 +154,8 @@
 >
 
 <div id="status">Loading schools...</div>
+
+<div id="map"></div>
 
 <div id="schools"></div>
 
@@ -138,10 +180,26 @@ const CSV_FILE = "data/schools.csv";
  * https://github.com/yourusername/hyderabad-school-explorer/issues/new
  */
 const GITHUB_ISSUE_URL =
-    "https://github.com/mvark/hyderabad-school-explorer/issues/new";
+    "https://github.com/YOUR-USERNAME/hyderabad-school-explorer/issues/new";
 
 
 let schools = [];
+
+
+/*
+ * Map setup (Leaflet + OpenStreetMap tiles - both open source, no API
+ * key needed). One layer group holds all dots for the CURRENTLY VISIBLE
+ * (i.e. search-filtered) list of schools, so it always mirrors the grid
+ * below it.
+ */
+const map = L.map("map").setView([17.42, 78.45], 11); // roughly centred on Hyderabad
+
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "&copy; OpenStreetMap contributors",
+    maxZoom: 18
+}).addTo(map);
+
+const markersLayer = L.layerGroup().addTo(map);
 
 
 /*
@@ -269,13 +327,20 @@ async function loadSchools() {
 
 
 /*
- * Display schools
+ * Display schools - renders both the card grid AND the map dots for
+ * whatever list is passed in (the full set, or a search-filtered subset).
  */
 function displaySchools(list) {
 
     const container = document.getElementById("schools");
 
     container.innerHTML = "";
+
+    updateMapMarkers(list);
+
+    document.getElementById("status").textContent =
+        list.length +
+        (list.length === 1 ? " school campus" : " school campuses");
 
     if (list.length === 0) {
 
@@ -303,10 +368,27 @@ function displaySchools(list) {
 
             const campus = document.createElement("div");
 
-            campus.className = "campus";
+            campus.className = "field";
 
-            campus.textContent =
-                school.Campus;
+            campus.innerHTML = '<span class="label">Campus:</span>';
+
+            if (school.Website) {
+
+                const campusLink = document.createElement("a");
+
+                campusLink.href = school.Website;
+                campusLink.target = "_blank";
+                campusLink.rel = "noopener";
+                campusLink.textContent = school.Campus;
+
+                campus.appendChild(campusLink);
+
+            } else {
+
+                campus.appendChild(
+                    document.createTextNode(school.Campus)
+                );
+            }
 
             card.appendChild(campus);
         }
@@ -323,6 +405,8 @@ function displaySchools(list) {
 
             const curriculumContainer =
                 document.createElement("div");
+
+            curriculumContainer.className = "curriculum-row";
 
             school.Curriculum
                 .split(";")
@@ -344,66 +428,12 @@ function displaySchools(list) {
         }
 
 
-        const links =
-            document.createElement("div");
-
-        links.className = "links";
-
-
-        if (school.Website) {
-
-            const website =
-                document.createElement("a");
-
-            website.href =
-                school.Website;
-
-            website.target = "_blank";
-            website.rel = "noopener";
-
-            website.textContent =
-                "School website";
-
-            links.appendChild(website);
-        }
-
-
-        if (school.Latitude && school.Longitude) {
-
-            const map =
-                document.createElement("a");
-
-            map.href =
-                "https://www.openstreetmap.org/?mlat=" +
-                encodeURIComponent(school.Latitude) +
-                "&mlon=" +
-                encodeURIComponent(school.Longitude) +
-                "#map=17/" +
-                encodeURIComponent(school.Latitude) +
-                "/" +
-                encodeURIComponent(school.Longitude);
-
-            map.target = "_blank";
-            map.rel = "noopener";
-
-            map.textContent =
-                "Map";
-
-            links.appendChild(map);
-        }
-
-
-        if (links.children.length > 0) {
-            card.appendChild(links);
-        }
-
-
         if (school["Last verified"]) {
 
             const verified =
-                document.createElement("small");
+                document.createElement("div");
 
-            verified.style.color = "#777";
+            verified.className = "last-verified";
 
             verified.textContent =
                 "Last verified: " +
@@ -415,11 +445,41 @@ function displaySchools(list) {
 
         container.appendChild(card);
     });
+}
 
 
-    document.getElementById("status").textContent =
-        list.length +
-        (list.length === 1 ? " school campus" : " school campuses");
+/*
+ * Sync the map's dots to whatever list is currently on screen. Schools
+ * without usable coordinates are simply skipped rather than guessed at.
+ */
+function updateMapMarkers(list) {
+
+    markersLayer.clearLayers();
+
+    list.forEach(school => {
+
+        const lat = parseFloat(school.Latitude);
+        const lon = parseFloat(school.Longitude);
+
+        if (isNaN(lat) || isNaN(lon)) {
+            return;
+        }
+
+        const marker = L.circleMarker([lat, lon], {
+            radius: 6,
+            weight: 1,
+            color: "#fff",
+            fillColor: "#3a7ca5",
+            fillOpacity: 0.85
+        });
+
+        marker.bindPopup(
+            "<strong>" + (school.School || "Unnamed school") + "</strong>" +
+            (school.Campus ? "<br>" + school.Campus : "")
+        );
+
+        marker.addTo(markersLayer);
+    });
 }
 
 
