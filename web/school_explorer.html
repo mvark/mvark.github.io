@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hyderabad School Explorer</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #222;
+        background: #fafafa;
+    }
+
+    h1 {
+        margin-bottom: 5px;
+    }
+
+    .subtitle {
+        color: #666;
+        margin-top: 0;
+    }
+
+    #search {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #bbb;
+        border-radius: 5px;
+        margin: 20px 0 10px;
+    }
+
+    #status {
+        color: #666;
+        margin: 10px 0 20px;
+    }
+
+    .school {
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 15px;
+        margin-bottom: 12px;
+    }
+
+    .school h2 {
+        font-size: 18px;
+        margin: 0 0 5px;
+    }
+
+    .campus {
+        color: #555;
+        margin-bottom: 10px;
+    }
+
+    .curriculum {
+        display: inline-block;
+        background: #eee;
+        padding: 4px 8px;
+        margin-right: 5px;
+        margin-bottom: 8px;
+        border-radius: 3px;
+        font-size: 13px;
+    }
+
+    .links a {
+        margin-right: 15px;
+        text-decoration: none;
+    }
+
+    .links {
+        margin-top: 8px;
+    }
+
+    .footer {
+        margin-top: 30px;
+        padding-top: 15px;
+        border-top: 1px solid #ddd;
+        font-size: 14px;
+        color: #666;
+    }
+
+    button {
+        padding: 8px 12px;
+        cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+        body {
+            padding: 12px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Hyderabad School Explorer</h1>
+
+<p class="subtitle">
+    Explore CBSE and international schools in Hyderabad.
+</p>
+
+<input
+    type="search"
+    id="search"
+    placeholder="Search school, campus or curriculum..."
+    autocomplete="off"
+>
+
+<div id="status">Loading schools...</div>
+
+<div id="schools"></div>
+
+<div class="footer">
+    <a href="data/schools.csv">Download dataset</a>
+    &nbsp; | &nbsp;
+    <a id="issueLink" href="#" target="_blank">
+        Report a correction or missing school
+    </a>
+</div>
+
+<script>
+
+const CSV_FILE = "data/schools.csv";
+
+/*
+ * GitHub repository URL.
+ *
+ * Change this to your repository once you create it.
+ *
+ * Example:
+ * https://github.com/yourusername/hyderabad-school-explorer/issues/new
+ */
+const GITHUB_ISSUE_URL =
+    "https://github.com/mvark/hyderabad-school-explorer/issues/new";
+
+
+let schools = [];
+
+
+/*
+ * Simple CSV parser.
+ *
+ * Handles quoted fields containing commas, e.g.
+ *
+ * "Delhi Public School, Nacharam","Nacharam","CBSE",...
+ */
+function parseCSV(text) {
+
+    const rows = [];
+    let row = [];
+    let value = "";
+    let insideQuotes = false;
+
+    for (let i = 0; i < text.length; i++) {
+
+        const char = text[i];
+        const next = text[i + 1];
+
+        if (char === '"' && insideQuotes && next === '"') {
+            value += '"';
+            i++;
+        }
+
+        else if (char === '"') {
+            insideQuotes = !insideQuotes;
+        }
+
+        else if (char === "," && !insideQuotes) {
+            row.push(value);
+            value = "";
+        }
+
+        else if ((char === "\n" || char === "\r") && !insideQuotes) {
+
+            if (char === "\r" && next === "\n") {
+                i++;
+            }
+
+            row.push(value);
+            value = "";
+
+            if (row.some(cell => cell.trim() !== "")) {
+                rows.push(row);
+            }
+
+            row = [];
+        }
+
+        else {
+            value += char;
+        }
+    }
+
+    // Handle final row
+    if (value !== "" || row.length > 0) {
+        row.push(value);
+
+        if (row.some(cell => cell.trim() !== "")) {
+            rows.push(row);
+        }
+    }
+
+    if (rows.length === 0) {
+        return [];
+    }
+
+    const headers = rows[0].map(h => h.trim());
+
+    return rows.slice(1).map(row => {
+
+        const record = {};
+
+        headers.forEach((header, index) => {
+            record[header] = (row[index] || "").trim();
+        });
+
+        return record;
+    });
+}
+
+
+/*
+ * Load CSV
+ */
+async function loadSchools() {
+
+    try {
+
+        const response = await fetch(CSV_FILE);
+
+        if (!response.ok) {
+            throw new Error(
+                "Unable to load " + CSV_FILE +
+                " (" + response.status + ")"
+            );
+        }
+
+        const text = await response.text();
+
+        schools = parseCSV(text);
+
+        document.getElementById("status").textContent =
+            schools.length + " school campuses";
+
+        displaySchools(schools);
+
+    }
+
+    catch (error) {
+
+        document.getElementById("status").innerHTML =
+            "<strong>Unable to load the school data.</strong><br>" +
+            error.message +
+            "<br><br>" +
+            "If you are opening index.html directly using file://, " +
+            "run a local web server such as " +
+            "<code>python -m http.server 8000</code>.";
+
+        console.error(error);
+    }
+}
+
+
+/*
+ * Display schools
+ */
+function displaySchools(list) {
+
+    const container = document.getElementById("schools");
+
+    container.innerHTML = "";
+
+    if (list.length === 0) {
+
+        container.innerHTML =
+            "<p>No schools found.</p>";
+
+        return;
+    }
+
+    list.forEach(school => {
+
+        const card = document.createElement("div");
+
+        card.className = "school";
+
+        const title = document.createElement("h2");
+
+        title.textContent =
+            school.School || "Unnamed school";
+
+        card.appendChild(title);
+
+
+        if (school.Campus) {
+
+            const campus = document.createElement("div");
+
+            campus.className = "campus";
+
+            campus.textContent =
+                school.Campus;
+
+            card.appendChild(campus);
+        }
+
+
+        /*
+         * Curriculum
+         *
+         * Expected format:
+         *
+         * CBSE;IB;Cambridge
+         */
+        if (school.Curriculum) {
+
+            const curriculumContainer =
+                document.createElement("div");
+
+            school.Curriculum
+                .split(";")
+                .map(item => item.trim())
+                .filter(Boolean)
+                .forEach(item => {
+
+                    const tag =
+                        document.createElement("span");
+
+                    tag.className = "curriculum";
+
+                    tag.textContent = item;
+
+                    curriculumContainer.appendChild(tag);
+                });
+
+            card.appendChild(curriculumContainer);
+        }
+
+
+        const links =
+            document.createElement("div");
+
+        links.className = "links";
+
+
+        if (school.Website) {
+
+            const website =
+                document.createElement("a");
+
+            website.href =
+                school.Website;
+
+            website.target = "_blank";
+            website.rel = "noopener";
+
+            website.textContent =
+                "School website";
+
+            links.appendChild(website);
+        }
+
+
+        if (school.Latitude && school.Longitude) {
+
+            const map =
+                document.createElement("a");
+
+            map.href =
+                "https://www.openstreetmap.org/?mlat=" +
+                encodeURIComponent(school.Latitude) +
+                "&mlon=" +
+                encodeURIComponent(school.Longitude) +
+                "#map=17/" +
+                encodeURIComponent(school.Latitude) +
+                "/" +
+                encodeURIComponent(school.Longitude);
+
+            map.target = "_blank";
+            map.rel = "noopener";
+
+            map.textContent =
+                "Map";
+
+            links.appendChild(map);
+        }
+
+
+        if (links.children.length > 0) {
+            card.appendChild(links);
+        }
+
+
+        if (school["Last verified"]) {
+
+            const verified =
+                document.createElement("small");
+
+            verified.style.color = "#777";
+
+            verified.textContent =
+                "Last verified: " +
+                school["Last verified"];
+
+            card.appendChild(verified);
+        }
+
+
+        container.appendChild(card);
+    });
+
+
+    document.getElementById("status").textContent =
+        list.length +
+        (list.length === 1 ? " school campus" : " school campuses");
+}
+
+
+/*
+ * Search
+ */
+document
+    .getElementById("search")
+    .addEventListener("input", function () {
+
+        const query =
+            this.value.trim().toLowerCase();
+
+        if (!query) {
+
+            displaySchools(schools);
+
+            return;
+        }
+
+
+        const filtered =
+            schools.filter(school => {
+
+                return (
+
+                    (school.School || "")
+                        .toLowerCase()
+                        .includes(query)
+
+                    ||
+
+                    (school.Campus || "")
+                        .toLowerCase()
+                        .includes(query)
+
+                    ||
+
+                    (school.Curriculum || "")
+                        .toLowerCase()
+                        .includes(query)
+
+                );
+
+            });
+
+
+        displaySchools(filtered);
+    });
+
+
+/*
+ * GitHub issue link
+ */
+document.getElementById("issueLink").href =
+    GITHUB_ISSUE_URL +
+    "?title=School%20data%20correction";
+
+
+/*
+ * Start application
+ */
+loadSchools();
+
+</script>
+
+</body>
+</html>
