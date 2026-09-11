@@ -70,7 +70,7 @@
 
   @media (max-width: 768px) {
     .layout { flex-direction: column; height: auto; }
-    #map-pane { height: 45vh; }
+    #map-pane { flex: none; height: 45vh; }
     #table-pane { border-left: none; border-top: 1px solid #ddd; max-height: none; }
 
     table, tbody, tr, td { display: block; width: 100%; }
@@ -90,7 +90,8 @@
 
 <header>
   <h1>India — Geographic Features Reference</h1>
-  <p>Click a row to zoom the map to that place. Squares = broad/regional features, circles = specific points. Grey rows have no Indian example.</p>
+  <p>Click a row to zoom the map to that place. Squares = broad/regional features, circles = specific points. Grey rows have no Indian example.<br/>
+    <a href="https://github.com/mvark/WebApps/blob/main/IndiaGeoMap/readme.md" target="_blank">Notes</a></p>
 </header>
 
 <div class="layout">
@@ -237,6 +238,12 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
+// Leaflet measures the map container once on init and won't notice if it
+// resizes afterward (e.g. rotating a phone, or resizing a devtools panel
+// across the mobile breakpoint without a page reload). This nudges it to
+// re-measure whenever the window size changes.
+window.addEventListener('resize', () => map.invalidateSize());
+
 // Numbered markers — square for broad/regional features, circle for
 // specific points. Same number and colors as the matching table row.
 FEATURES.forEach((f, i) => {
@@ -277,6 +284,5 @@ document.getElementById('row-0').classList.add('active');
 </script>
   <script data-goatcounter="https://mvrk.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
-  (Notes)[https://github.com/mvark/WebApps/blob/main/IndiaGeoMap/readme.md]
 </body>
 </html>
