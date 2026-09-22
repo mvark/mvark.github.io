@@ -17,13 +17,13 @@ CGR International School,Madhapur,CBSE,17.447,78.376,https://cgrinternationalsch
 Chinmaya Vidyalaya,Kundanbagh,CBSE,17.4372,78.4552,https://www.chinmayavidyalayahyderabad.org,
 Chirec International School,Kondapur,CBSE,17.461,78.357,https://www.chirec.ac.in/kp-overview/,16-08-2026
 Chirec International School,Gachibowli,CBSE;Cambridge,17.44,78.349,https://www.chirec.ac.in/gb-overview/,16-08-2026
-Chirec International School,Lingampally,IB;Cambridge,17.4855,78.318,https://www.chirec.ac.in/serilingampally-overview/,16-08-2026
+Chirec International School,Lingampally,Cambridge;IB,17.4855,78.318,https://www.chirec.ac.in/serilingampally-overview/,16-08-2026
 CMR International School,Jeedimetla,CBSE,17.515,78.462,https://cmrisshapur.com/,
 CMR International School,Suraram,CBSE,17.536,78.463,https://cmrinternationalsuraram.com/,
 DAV Public School,Safilguda / Neredmet,CBSE,17.476,78.523,https://www.davblp.org,
 DAV Public School,Banjara Hills,CBSE,17.415,78.448,https://www.davblp.org,
 DAV Public School,Kukatpally,CBSE,17.494,78.399,https://www.davblp.org,
-Delhi Public School,DPS Nacharam,CBSE;Cambridge,17.464865, 78.491817,https://www.dpsnacharam.in/,
+Delhi Public School,Nacharam,CBSE;Cambridge,17.464865, 78.491817,https://www.dpsnacharam.in/,
 Delhi Public School,Khajaguda,CBSE,17.418025, 78.371034,https://www.dpshyderabad.in,
 Delhi Public School,Mahendra Hills,CBSE;Cambridge,17.462,78.497,https://www.dpsmahendrahills.in/,
 Delhi Public School,Nadergul,CBSE;Cambridge,17.267705, 78.544485,https://www.dpsnadergul.in/,
@@ -44,7 +44,7 @@ Glendale International School,Sun City,CBSE;Cambridge;IB,17.3693,78.3912,https:/
 Glendale International School,Tellapur,IB,17.472011,78.300419,https://glendaleschool.org,16-08-2026
 Glendale International School,Financial District,Cambridge,17.432381,78.317585,https://glendaleschool.org,16-08-2026
 GVK International School,Kompally,CBSE,17.572876, 78.498577,https://gvkinternationalschool.in/,
-ARCA Global International School,Uppal,CBSE;IB;Cambridge;IGCSE,17.406,78.559,https://arca.co.in,
+ARCA Global International School,Uppal,CBSE;Cambridge;IGCSE;IB,17.406,78.559,https://arca.co.in,
 Hindu Public School,Sanath Nagar,CBSE,17.455,78.443,https://www.hindupublicschool.com,
 INDIC International School,Kompally,CBSE,17.532614, 78.479292,https://www.indicschools.in/,
 Indus International School,Mokila,IB,17.438,78.282,https://hyderabad.indusschool.com/,
@@ -73,7 +73,7 @@ Mount Carmel Global School,Kanchanbagh,CBSE,17.337,78.535,https://www.mountcarme
 Nalla Malla Reddy Foundation School,Ghatkesar,CBSE,17.449,78.685,https://www.nmrfs.ac.in,
 Nasr School,Khairatabad,CBSE,17.41,78.459,https://www.nasrschool.in,
 Nasr School,Mehdipatnam,CBSE,17.393,78.432,https://www.nasrschool.in,
-Oakridge International School,Bachupally,CBSE;IB;Cambridge,17.548,78.385,https://www.oakridge.in,
+Oakridge International School,Bachupally,CBSE;Cambridge;IB,17.548,78.385,https://www.oakridge.in,
 Oakridge International School,Gachibowli,CBSE;IB,17.4243,78.3611,https://www.oakridge.in,
 Oakwood International School,Kothapet,CBSE,17.3686,78.5521,https://www.oakwoodis.in,
 Ocimum International School,Bowenpally,CBSE,17.475,78.466,https://www.ocimum.edu.in,
@@ -104,7 +104,7 @@ Sancta Maria International School,Serilingampally,Cambridge,17.4846,78.3268,http
 Santhinikethan Concept School,Kachiguda,CBSE,17.387,78.491,https://www.santhinikethan.in,
 Secunderabad Public School,West Marredpally,CBSE,17.5,78.505,https://www.secunderabadpublicschool.in,
 Sentia The Global School,Miyapur,CBSE,17.498,78.356,https://www.sentiaglobalschool.com,
-Shantiniketan International School,Bachupally,CBSE;IB;Cambridge,17.548,78.385,https://www.sis.edu.in,
+Shantiniketan International School,Bachupally,CBSE;Cambridge;IB,17.548,78.385,https://www.sis.edu.in,
 Shree Hanuman Vyayama Shala Public School,Sultan Bazar,CBSE,17.384,78.481,https://www.shvpschool.com,
 Shree Swaminarayan Gurukul International School,Moinabad,CBSE,17.369,78.246,https://www.gurukul.org,
 Silver Oaks International School,Bachupally / Miyapur,CBSE;IB (PYP),17.548,78.385,https://www.silveroaks.co.in/campus/bachupally-hyderabad,19-08-2026
@@ -114,12 +114,12 @@ Silver Oaks International School,Mokila,IB (candidate);International (unspecifie
 Sreenidhi International School,Aziznagar,CBSE;IB;Cambridge,17.401,78.285,https://www.sis.edu.in,
 Sri Chaitanya School,Multiple Campuses,CBSE,17.4,78.48,https://www.srichaitanya.net,
 Sri Ram School,Nizampet,CBSE,17.516,78.367,https://www.sriramschools.com,
-St. Peter's High School,Hyderabad,CBSE,17.44,78.48,https://www.stpetershyd.com,
+St. Peter's High School,Bowenpally,CBSE,17.44,78.48,https://www.stpetershighschool.edu.in/,21-09-2026
 Suchitra Academy,Quthbullapur / Suchitra,CBSE;Cambridge,17.52,78.458,https://www.suchitra.in,19-08-2026
 The Aga Khan Academy Hyderabad,Rajendranagar,IB,17.319,78.403,https://www.agakhanacademies.org/hyderabad,
 The Creek Planet School (Venus Campus),Bachupally,CBSE,17.548,78.385,https://www.thecreekschool.com,
-The Gaudium School,Hyderabad,CBSE;IB;Cambridge,17.465,78.281,https://www.thegaudium.com,
-The Hyderabad Public School,Begumpet,ICSE;ISC;Cambridge,17.447,78.464,https://www.hpsbegumpet.org.in/,19-08-2026
+The Gaudium School,Peerancheru,CBSE;Cambridge;IB,17.465,78.281,https://www.thegaudium.com,21-09-2026
+The Hyderabad Public School,Begumpet,Cambridge;ICSE;ISC,17.447,78.464,https://www.hpsbegumpet.org.in/,19-08-2026
 The Hyderabad Public School,Ramanthapur,CBSE,17.397,78.54,https://hpsramanthapur.org/,19-08-2026
 The Lyceum,Saroornagar,CBSE,17.372,78.539,https://www.thelyceum.in,
 The Premia Academy,Attapur,CBSE;Cambridge,17.37,78.426,https://www.thepremiaacademy.com,
@@ -168,9 +168,9 @@ Madina High School,Himayatnagar,CBSE,17.4,78.485,https://www.madinahighschool.or
 Mahatma Gandhi Memorial High School,Yousufguda,CBSE,17.437,78.428,https://www.mgmhs.in,
 Kennedy High The Global School,Bachupally,CBSE;Cambridge,17.542632, 78.358614,https://www.kennedyglobalschool.edu.in/,
 Niraj International School,Kandlakoya / Kompally,CBSE,17.573,78.501,https://www.nirajinternationalschool.com,
-Candiidus International School,Muthangi / Patancheru,CBSE;IB;Cambridge,17.548,78.293,https://www.candiidus.in,
+Candiidus International School,Muthangi / Patancheru,CBSE;Cambridge;IB,17.548,78.293,https://www.candiidus.in,
 Manchester Global School,Financial District,CBSE;IB,17.41,78.326,https://www.manchester.edu.in,
-Keystone International School,Financial District / Puppalguda,IB;Cambridge,17.405,78.343,https://www.keystoneeducation.in,
+Keystone International School,Financial District / Puppalguda,Cambridge;IB,17.405,78.343,https://www.keystoneeducation.in,
 Akshara International School,LB Nagar,CBSE,17.351,78.553,https://www.aksharagroup.in,
 Akshara International School,AS Rao Nagar,CBSE,17.48,78.57,https://www.aksharagroup.in,
 Akshara International School,Kukatpally,CBSE,17.494,78.399,https://www.aksharagroup.in,
@@ -255,73 +255,73 @@ St. John's Grammar School,Secunderabad,ICSE,17.443,78.501,https://stjohnsgrammar
 St. Anthony's High School,Himayatnagar,ICSE;State Board,17.4021,78.487,https://stanthonyshyd.edu.in,
 The Shri Ram Universal School, Financial District,CBSE,17.417327, 78.349914,https://tsushyderabad.com,19-08-2026
 Keystone School,Financial District,Cambridge;IB,17.412399, 78.34855,https://www.keystoneeducation.in,19-08-2026
-Canary The School,Madinaguda, CBSE;IB,17.498539, 78.347958,https://www.canarytheschool.com,19-08-2026
+Canary The School,Madinaguda,CBSE;IB,17.498539, 78.347958,https://www.canarytheschool.com,19-08-2026
 Ambitus World School,Bachupally,Cambridge,17.554723, 78.39856,https://ambitusworldschool.com/hyderabad/,19-08-2026
-Epistemo Vikas Leadership School, Nallagandla,CBSE;Cambridge,17.468428, 78.304508,https://epistemo.in/,19-08-2026
-The Global Edge School,Madhapur,CBSE,17.450043, 78.387685,https://www.globaledgeschool.com/,
-The Global Edge School,Kukatpally,CBSE,17.491567, 78.396445,https://www.globaledgeschool.com/,
-The Global Edge School,Vasanth Nagar,CBSE,17.494761, 78.382119,https://www.globaledgeschool.com/,
-The Global Edge School,Kokapet,CBSE,17.391987, 78.341784,https://www.globaledgeschool.com/,
-Ocean The ABM School,Malakpet,CBSE,17.367,78.514,https://www.oceantheabmschool.com/,
-Sri Sloka School,Dundigal / Gandimaisamma,CBSE,17.56,78.43,https://www.srisloka.in/,
-Meluha School,Moinabad,CBSE,17.355,78.285,https://www.meluhaedu.com/,
-Hi Tech Scholars Residential High School,Athvelly / Medchal,CBSE,17.6,78.475,https://www.hitechscholars.com/,
-Good Shepherd High School,Jeedimetla / Suchitra,CBSE,17.507063, 78.481288,,
-Delhi World Public School,Kompally,CBSE,17.532134, 78.478641,https://dwpskompally.edu.in/,
-Revathi High School,Shankarpally,CBSE,17.452,78.128,,
-Bhashyam Blooms School,Hayathnagar,CBSE,17.32,78.596,https://bloomshayathnagar.in/,
-Joshitha School,Ameenpur / Jankampet,CBSE,17.525,78.33,https://www.joshithaschool.com/,
-Gowtham World School,Saroornagar,CBSE,17.35,78.555,,
+Epistemo Vikas Leadership School,Nallagandla,CBSE;Cambridge,17.468428, 78.304508,https://epistemo.in/,19-08-2026
+The Global Edge School,Madhapur,CBSE,17.450043, 78.387685,https://www.globaledgeschool.com/,21-09-2026
+The Global Edge School,Kukatpally,CBSE,17.491567, 78.396445,https://www.globaledgeschool.com/,21-09-2026
+The Global Edge School,Vasanth Nagar,CBSE,17.494761, 78.382119,https://www.globaledgeschool.com/,21-09-2026
+The Global Edge School,Kokapet,CBSE,17.391987, 78.341784,https://www.globaledgeschool.com/,21-09-2026
+Ocean The ABM School,Malakpet,CBSE,17.367,78.514,https://www.oceantheabmschool.com/,21-09-2026
+Sri Sloka School,Dundigal / Gandimaisamma,CBSE,17.56,78.43,https://www.srisloka.in/,21-09-2026
+Meluha School,Moinabad,CBSE,17.355,78.285,https://www.meluhaedu.com/,21-09-2026
+Hi Tech Scholars Residential High School,Athvelly / Medchal,CBSE,17.6,78.475,https://www.hitechscholars.com/,21-09-2026
+Good Shepherd High School,Jeedimetla / Suchitra,CBSE,17.507063, 78.481288,,21-09-2026
+Delhi World Public School,Kompally,CBSE,17.532134, 78.478641,https://dwpskompally.edu.in/,21-09-2026
+Revathi High School,Shankarpally,CBSE,17.452,78.128,,21-09-2026
+Bhashyam Blooms School,Hayathnagar,CBSE,17.32,78.596,https://bloomshayathnagar.in/,21-09-2026
+Joshitha School,Ameenpur / Jankampet,CBSE,17.525,78.33,https://www.joshithaschool.com/,21-09-2026
+Gowtham World School,Saroornagar,CBSE,17.35,78.555,,21-09-2026
 The Premia Academy School,Attapur,CBSE;Cambridge,17.355,78.428,https://www.thepremiaacademy.com/,
-Delhi Public School,Ghatkesar,CBSE,17.45,78.687,https://dpsghatkesar.org.in/,
-Lakshya School,Thorrur,CBSE,17.315,78.658,https://www.thelakshyaschool.com/,
-Sloka The School,Puppalaguda / Manikonda,CBSE,17.401357, 78.363649,,
-Jain Heritage A Cambridge School,Kondapur,CBSE;Cambridge,17.46,78.357,https://www.jgischools.in/kondapur.php,
-Academic Heights Public School,Badangpet,CBSE,17.304911, 78.521504,https://badangpet.academicheights.in/,
-Academic Heights School,Moosarambagh / Dilsukhnagar,CBSE,17.368,78.535,http://ahpsdilsukhnagar.com/,
-Academic Heights Public School,Nacharam,CBSE,17.435,78.564,https://nacharam.academicheights.in/,
-Academic Heights Public School,Mallampet / Dundigal,CBSE,17.545,78.405,https://ahpsmallampet.com/,
-GD Goenka School,L.B. Nagar,CBSE,17.345,78.558,https://gdgoenkahyderabad.com/,
+Delhi Public School,Ghatkesar,CBSE,17.45,78.687,https://dpsghatkesar.org.in/,21-09-2026
+Lakshya School,Thorrur,CBSE,17.315,78.658,https://www.thelakshyaschool.com/,21-09-2026
+Sloka The School,Puppalaguda / Manikonda,CBSE,17.401357, 78.363649,,21-09-2026
+Jain Heritage A Cambridge School,Kondapur,CBSE;Cambridge,17.46,78.357,https://www.jgischools.in/kondapur.php,21-09-2026
+Academic Heights Public School,Badangpet,CBSE,17.304911, 78.521504,https://badangpet.academicheights.in/,21-09-2026
+Academic Heights School,Moosarambagh / Dilsukhnagar,CBSE,17.368,78.535,http://ahpsdilsukhnagar.com/,21-09-2026
+Academic Heights Public School,Nacharam,CBSE,17.435,78.564,https://nacharam.academicheights.in/,21-09-2026
+Academic Heights Public School,Mallampet / Dundigal,CBSE,17.545,78.405,https://ahpsmallampet.com/,21-09-2026
+GD Goenka School,L.B. Nagar,CBSE,17.345,78.558,https://gdgoenkahyderabad.com/,21-09-2026
 Pallavi School,Ahmedguda / Keesara,CBSE,17.485,78.62,https://piskeesara.com,
 Bhashyam Blooms School,Medipally / Peerzadiguda,CBSE,17.385,78.6,https://bloomspeerzadiguda.in/,
 Bhashyam Blooms School,Alwal,CBSE,17.5,78.51,https://www.bloomsalwalcbse.in/,
 Keshava Reddy E-Learning School,Bachupally,CBSE,17.542,78.37,https://keshavareddycbse.com/,
 Origin School,Patancheru,CBSE,17.53,78.265,,
 Infinity World School,Serilingampally,CBSE,17.475,78.305,,
-Birla Open Minds International School,Bandlaguda Jagir,CBSE,17.361490, 78.383726,https://www.birlaopenminds.com/,
-Birla Open Minds International School,L.B.Nagar,CBSE,17.348462, 78.564963,https://bomis-lbnagar.com/,
-Shree Swaminarayan Gurukul International School,Medchal,CBSE,17.63,78.485,https://gurukul.org/hyderabad/,
-St. Anthony's School,Gundlapochampally,CBSE,17.565,78.48,,
-Meridian School,Kompally,CBSE,17.531378, 78.479607,https://meridiankompally.com/,
-Deccan Springs School,Nacharam / Uppal,CBSE,17.435,78.575,,
-St Anthony's Grammar High School,Keesara,CBSE,17.525,78.68,,
-Candiidus International School,Patancheruvu,CBSE;Cambridge;IB,17.535276, 78.236901,https://candiidusschool.com/,
-World One School, Kondapur,CBSE;Cambridge,17.475527, 78.370090,https://worldoneschool.org/,
-VIP's International School,Shaheen Nagar,Cambridge,17.300464, 78.481653,https://vipinternationalschool.com/,
-Unicent School,Kondapur,CBSE;Cambridge,17.485517, 78.350415,https://unicent.in/kondapur,
-Trident International School,Langar Houz,Cambridge,17.374086, 78.413252,https://www.tridentinternationalschool.org/,
-The Premia Academy, Attapur,CBSE;Cambridge, 17.376905, 78.428493,https://welcome.thepremiaacademy.com,
-Sri Vidyaranya International School,Bandlaguda Jagir,CBSE;Cambridge,17.346061, 78.391824,https://svis.ind.in/,
-Sri Chaitanya School, Miyapur,CBSE;Cambridge,17.496426, 78.362384,https://futurepathways.in,
-Sloka International School,Manneguda,CBSE;Cambridge,17255950, 78.587540,https://slokainternational.com/,
-Slate The School, Bowrampet,CBSE;ICSE;Cambridge,17.562334, 78.409298,https://slateschool.in/,
-Reqelford International School,Keesara,CBSE;Cambridge,17.478744, 78.634551,https://reqelfordinternationalschool.com/,
-Pragnya Montessori School,Pragathi Nagar,Cambridge,17.526013, 78.398973,https://pragnyamontessori.com/,
-Pallavi International School,Gandipet,CBSE;Cambridge,17.354441, 78.329510,https://pallaviinternationalschool.com/,
-Pallavi International School,Bachupally,CBSE;Cambridge,17.562632, 78.368261,https://pisbachupally.org/,
-Northfield International School,Devarayamjal,Cambridge,17.576698, 78.510537,https://northfieldschools.in/,
-NIHOC The International School,Kachavani Singaram,Cambridge,17.396922, 78.625719,https://www.nihoc.in/,
-NPS - National Public School, Puppalguda,CBSE;Cambridge, 17.397504, 78.364692,https://npshyderabad.com/,
-Heartfulness International School, Damarlapally,Cambridge,17.178141, 78.206409, https://www.hiskanha.org/,
-Green Gables International School,Mirzaguda,CBSE;Cambridge,17.423651, 78.268835,https://greengablesinternationalschool.com/,
-Githanjali The Global School,Kondapur,CBSE;Cambridge,17.470059, 78.357932,http://www.githanjalitheglobalschool.com/,
-Gitanjali Vedika,Puppalguda,ICSE;ISC;Cambridge,17.396607, 78.361761,https://www.gitanjalischools.com/schools/gitanjali-vedika,
-Gitanjali School,Begumpet,CBSE;Cambridge,17.440822, 78.458076,https://www.gitanjalischools.com/,
-Gitanjali International School,Bowrampet,CBSE;Cambridge,17.561793, 78.388566,https://gisbowrampet.com/,
-Edify World School, Attapur,CBSE;Cambridge,17.361956, 78.422032,https://edifyworldschoolattapur.com/,
-Dreamtime Learning, Jubilee Hills, Cambridge,17.435005, 78.406091,https://www.dreamtimelearninghub.com/hyd-campus,
-Discoveri Oaks International School,Pedda Amberpet,CBSE;Cambridge,17.323584, 78.626849,https://discoverioaks.org/,
-Delhi World Public School,Beeramguda,CBSE,17.546242, 78.283838,https://www.dwpsbeeramguda.in/,
-Blue Blocks Complete School, Osman Nagar,Cambridge,17.436016, 78.285558,https://blueblocks.in/,
-Arbor International School,Kondapur,Cambridge,17.468938, 78.349647,https://arborinternationalschool.com/,
-Ambitus Kinder World,Gachibowli,Cambridge,17.448359, 78.362591,https://ambituskinderworld.com/,
+Birla Open Minds International School,Bandlaguda Jagir,CBSE,17.361490, 78.383726,https://www.birlaopenminds.com/,21-09-2026
+Birla Open Minds International School,L.B.Nagar,CBSE,17.348462, 78.564963,https://bomis-lbnagar.com/,21-09-2026
+Shree Swaminarayan Gurukul International School,Medchal,CBSE,17.63,78.485,https://gurukul.org/hyderabad/,21-09-2026
+St. Anthony's School,Gundlapochampally,CBSE,17.565,78.48,,21-09-2026
+Meridian School,Kompally,CBSE,17.531378, 78.479607,https://meridiankompally.com/,21-09-2026
+Deccan Springs School,Nacharam / Uppal,CBSE,17.435,78.575,,21-09-2026
+St Anthony's Grammar High School,Keesara,CBSE,17.525,78.68,,21-09-2026
+Candiidus International School,Patancheruvu,CBSE;Cambridge;IB,17.535276, 78.236901,https://candiidusschool.com/,21-09-2026
+World One School, Kondapur,CBSE;Cambridge,17.475527, 78.370090,https://worldoneschool.org/,21-09-2026
+VIP's International School,Shaheen Nagar,Cambridge,17.300464, 78.481653,https://vipinternationalschool.com/,21-09-2026
+Unicent School,Kondapur,CBSE;Cambridge,17.485517, 78.350415,https://unicent.in/kondapur,21-09-2026
+Trident International School,Langar Houz,Cambridge,17.374086, 78.413252,https://www.tridentinternationalschool.org/,21-09-2026
+The Premia Academy, Attapur,CBSE;Cambridge, 17.376905, 78.428493,https://welcome.thepremiaacademy.com,21-09-2026
+Sri Vidyaranya International School,Bandlaguda Jagir,CBSE;Cambridge,17.346061, 78.391824,https://svis.ind.in/,21-09-2026
+Sri Chaitanya School, Miyapur,CBSE;Cambridge,17.496426, 78.362384,https://futurepathways.in,21-09-2026
+Sloka International School,Manneguda,CBSE;Cambridge,17255950, 78.587540,https://slokainternational.com/,21-09-2026
+Slate The School, Bowrampet,CBSE;ICSE;Cambridge,17.562334, 78.409298,https://slateschool.in/,21-09-2026
+Reqelford International School,Keesara,CBSE;Cambridge,17.478744, 78.634551,https://reqelfordinternationalschool.com/,21-09-2026
+Pragnya Montessori School,Pragathi Nagar,Cambridge,17.526013, 78.398973,https://pragnyamontessori.com/,21-09-2026
+Pallavi International School,Gandipet,CBSE;Cambridge,17.354441, 78.329510,https://pallaviinternationalschool.com/,21-09-2026
+Pallavi International School,Bachupally,CBSE;Cambridge,17.562632, 78.368261,https://pisbachupally.org/,21-09-2026
+Northfield International School,Devarayamjal,Cambridge,17.576698, 78.510537,https://northfieldschools.in/,21-09-2026
+NIHOC The International School,Kachavani Singaram,Cambridge,17.396922, 78.625719,https://www.nihoc.in/,21-09-2026
+NPS - National Public School,Puppalguda,CBSE;Cambridge, 17.397504, 78.364692,https://npshyderabad.com/,21-09-2026
+Heartfulness International School, Damarlapally,Cambridge,17.178141, 78.206409, https://www.hiskanha.org/,21-09-2026
+Green Gables International School,Mirzaguda,CBSE;Cambridge,17.423651, 78.268835,https://greengablesinternationalschool.com/,21-09-2026
+Githanjali The Global School,Kondapur,CBSE;Cambridge,17.470059, 78.357932,http://www.githanjalitheglobalschool.com/,21-09-2026
+Gitanjali Vedika,Puppalguda,Cambridge;ICSE;ISC,17.396607, 78.361761,https://www.gitanjalischools.com/schools/gitanjali-vedika,21-09-2026
+Gitanjali School,Begumpet,CBSE;Cambridge,17.440822, 78.458076,https://www.gitanjalischools.com/,21-09-2026
+Gitanjali International School,Bowrampet,CBSE;Cambridge,17.561793, 78.388566,https://gisbowrampet.com/,21-09-2026
+Edify World School,Attapur,CBSE;Cambridge,17.361956, 78.422032,https://edifyworldschoolattapur.com/,21-09-2026
+Dreamtime Learning,Jubilee Hills,Cambridge,17.435005, 78.406091,https://www.dreamtimelearninghub.com/hyd-campus,21-09-2026
+Discoveri Oaks International School,Pedda Amberpet,CBSE;Cambridge,17.323584, 78.626849,https://discoverioaks.org/,21-09-2026
+Delhi World Public School,Beeramguda,CBSE,17.546242, 78.283838,https://www.dwpsbeeramguda.in/,21-09-2026
+Blue Blocks Complete School,Osman Nagar,Cambridge,17.436016, 78.285558,https://blueblocks.in/,21-09-2026
+Arbor International School,Kondapur,Cambridge,17.468938, 78.349647,https://arborinternationalschool.com/,21-09-2026
+Ambitus Kinder World,Gachibowli,Cambridge,17.448359, 78.362591,https://ambituskinderworld.com/,21-09-2026
